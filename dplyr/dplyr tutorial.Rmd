@@ -1,0 +1,177 @@
+---
+title: "dplyr tutorial"
+author: "Fan Gong"
+date: "2017/6/22"
+output: github_document
+---
+
+#dplyr package learning 
+
+dplyr is a powerful package to do data manipulatin.
+
+Function1: common data manipulating operations such as filtering, selecting, re-ordering
+
+Function2: split-apply-combine
+
+#Data: mammals sleep
+
+This data set contains the sleeptimes and weights for a set of mammals.
+
+```{r}
+library(dplyr)
+library(downloader)
+url = "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/msleep_ggplot2.csv"
+filename = "msleep_ggplot2.csv"
+if(!file.exists(filename)){
+  download(url, filename)
+}
+msleep = read.csv("msleep_ggplot2.csv", header = T, as.is = T)
+head(msleep)
+```
+
+
+#verbs to remember
+###select
+`select(.data, condition)` select columns
+```{r}
+#select a range of columns
+head(select(msleep, name:order))
+
+
+#select all columns except a specific column
+head(select(msleep, -name))
+
+#select all columns that start with the character string 'sl', use the function starts_with(). Also we have ends_with() = select columns that ends with a string; contains() = ...contains a character string; matches() = ...matches a regular expression; one_of() = ... from a group of names (a character vector)
+
+head(select(msleep, starts_with('sl')))
+head(select(msleep, one_of(c('sleep_total','gongfan'))))
+
+```
+
+###filter
+`filter(.data, condition)` select rows. We can use the boolean operators (>,<,>=,<=,!=,%in%) to create logical condition.
+```{r}
+#one conditon(numeric)
+filter(msleep, sleep_total >= 16)
+
+#more than one conditon(numeric)
+filter(msleep, sleep_total >= 16, bodywt >= 1)
+
+#one condition(character)
+filter(msleep, order %in% c('Perissodactyla', 'Primates'))
+```
+
+###arrange
+`arrange(.data, var)` To arrange(or re-order) rows by a particular column such as the taxonomic order, list the name of the column you want to arrange the rows by.
+```{r}
+#Order by one column
+msleep %>% arrange(order) %>% head()
+
+#Order by more than one columns
+msleep %>% 
+  select(name, order, sleep_total) %>%
+  arrange(order, sleep_total) %>% 
+  head()
+
+#The mix use of three verbs(very simmilar to SQL)
+msleep %>% 
+  select(name, order, sleep_total) %>%
+  filter(sleep_total >= 16) %>%
+  arrange(order, sleep_total)
+
+#change the sacending order to descending
+msleep %>%
+  select(name, order, sleep_total) %>%
+  filter(sleep_total >= 16) %>%
+  arrange(order, desc(sleep_total))
+
+```
+
+###mutate
+`mutate(.data)` add new columns to the data frame. 
+```{r}
+msleep %>%
+  mutate(rem_proportion = sleep_rem / sleep_total,
+         bodywt_grams = bodywt * 1000) %>% head()
+
+```
+
+###summary
+`summarise` create summary statistics for a given column in the data frame such as finding the mean. For example, to compute the average number of hours of sleep, apply the `mean()` function to the column sleep_total and call the summary value avg_sleep.
+
+There are many other summary statistics you could consider such sd(), min(), max(), median(), sum(),n()(return the length of the vector), n_distinct() (number of distinct values in vector)
+```{r}
+msleep %>%
+  summarize(avg_sleep = mean(sleep_total),
+            min_sleep = min(sleep_total), 
+            max_sleep = max(sleep_total),
+            total = n())
+
+```
+
+
+###group_by
+`group_by` split the data frame by some variable, apply a function to the individual data frames and then combine the output
+```{r}
+msleep %>%
+  group_by(order) %>%
+  summarize(avg_sleep = mean(sleep_total),
+            min_sleep = min(sleep_total), 
+            max_sleep = max(sleep_total),
+            total = n())
+
+
+```
+
+###join
+`inner_join(x, y, by = )` returns rows when there is a match in both tables.
+`left_join(x, y, by = )` reuturns all rows from the left table, even if there are no matches in the right table.
+`right_join/full_join/semi_join/anti_join`
+
+```{r}
+df1 = data.frame(ID = c(1, 2, 3, 4, 5),
+                  w = c('a', 'b', 'c', 'd', 'e'),
+                  x = c(1, 1, 0, 0, 1),
+                  y=rnorm(5),
+                  z=letters[1:5])
+
+df2 = data.frame(ID = c(1, 7, 3, 6, 8),
+                  a = c('z', 'b', 'k', 'd', 'l'),
+                  b = c(1, 2, 3, 0, 4),
+                  c =rnorm(5),
+                  d =letters[2:6])
+
+#inner join
+inner_join(df1, df2, by='ID')
+
+#semi join 
+##similar to inner join, but keeping just columns from x
+semi_join(df1, df2, by='ID')
+
+#left join
+left_join(df1, df2, by='ID')
+```
+
+#Pipe Operator: %>%
+This operator allows you to pipe the output from one function to the input of another function. Instead of nesting functions(reading from inside to the outside), the idea of piping is to read the function from left to right.
+```{r}
+msleep %>% select(name, sleep_total) %>% head()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
