@@ -16,5 +16,5 @@ Here is the list of the package:
    
   * `reshape2` -- data format transformation package.
   
-       + It uses `melt` and `cast` function to transfer data between long-format and wide-format.
+       + It uses `melt` and `cast` function to transform data between long-format and wide-format.
                 
