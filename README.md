@@ -1,5 +1,5 @@
 # R-package-learning
-This repository contains some basic and advanced R packages tutorial summarized by meself.
+This repository contains some basic and advanced R packages tutorial summarized by myself.
 
 Here is the list of the package:
   * `dplyr` -- data manipulating package. 
