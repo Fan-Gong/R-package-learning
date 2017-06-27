@@ -4,9 +4,9 @@ This repository contains some basic and advanced R packages tutorial summarized 
 Here is the list of the package:
   * `dplyr` -- data manipulating package. 
   
-   + Its syntax is similar to SQL. 
+       + Its syntax is similar to SQL. 
   
-   + It is Used to extract, re-order, group and join easily by pipe operator.
+       + It is Used to extract, re-order, group and join easily by pipe operator.
              
   * `tidyr` -- data manipulating/clean package.
   
