@@ -6,9 +6,9 @@ Here is the list of the package:
   
        + Its syntax is similar to SQL. 
   
-       + It is Used to extract, re-order, group and join easily by pipe operator.
+       + It is used to extract, re-order, group and join through pipe operator.
              
-  * `tidyr` -- data manipulating/clean package.
+  * `tidyr` -- data manipulating/cleaning package.
   
        + It is used to separate and unite columns.
   
