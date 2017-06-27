@@ -2,7 +2,7 @@
 This repository contains some basic and advanced R packages tutorial summarized by meself.
 
 Here is the list of the package:
-  * `dplyr` --  data manipulating package. 
+  * `dplyr` -- data manipulating package. 
   
   Its syntax is similar to SQL. 
   
