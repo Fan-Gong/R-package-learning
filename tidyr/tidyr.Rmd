@@ -1,0 +1,63 @@
+---
+title: "tidyr tutorial"
+author: "fg2399"
+date: "2017/6/27"
+output: github_document
+---
+
+#tidyr tutorial
+
+tidyr and dplyr provide fundamental functions for cleaning, processing, & manipulating data
+
+##gather
+`gather` function will reshape wide format to long format
+
+It is pretty similar to `melt` function in `reshape`
+
+```{r, message=FALSE}
+library(tidyr)
+library(reshape2)
+head(airquality)
+
+aql = gather(airquality, variable, value, -Month, -Day)
+head(aql)
+
+aql2 = melt(airquality, id.vars = c("Month","Day"), variable.name = "variable", value.name = "value")
+head(aql2)
+```
+
+##spread
+`spread` function will reshape long format into wide format
+
+It is pretty similar to `dcast` function in `reshape2` 
+
+```{r}
+aqw = spread(aql, key = "variable", value = "value")
+head(aqw)
+
+aqw2 = dcast(aql, Month + Day ~ variable)
+head(aqw2)
+```
+
+##unite
+
+`unite` merge two varibales into one. It combines two varibales of a single observation into one variable.
+
+```{r}
+aql_united = unite(aql, col = date, Month, Day, sep = '.')
+head(aql_united)
+```
+
+
+##seperate
+
+`seperate` function will split a single variable into two.
+It is similar to split the key into two variables, using a regular expression to describe the character that seperates them.
+```{r}
+aql_separate = separate(aql_united, col = date, into = c('Month','Day'), sep = '\\.')
+head(aql_separate)
+```
+
+
+
+
