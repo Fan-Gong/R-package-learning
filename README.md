@@ -18,8 +18,9 @@ Here is the list of the package:
   
        + It uses `melt` and `cast` function to transform data between long-format and wide-format.
   
-  * `plyr` -- data manipulating package (split-apply-combine)
+  * `plyr` -- data manipulating package (split-apply-combine)
      
-      + It is used to break a big problem down into manageable pieces, operate on each piece and then put all the pieces back together.
-      + Usually deal with data frame, list or array.
+       + It is used to break a big problem down into manageable pieces, operate on each piece and then put all the pieces back together.
+       
+       + Usually deal with data frame, list or array.
                 
