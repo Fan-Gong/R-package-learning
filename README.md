@@ -17,4 +17,9 @@ Here is the list of the package:
   * `reshape2` -- data format transformation package.
   
        + It uses `melt` and `cast` function to transform data between long-format and wide-format.
+  
+  * `plyr` -- data manipulating package (split-apply-combine)
+     
+      + It is used to break a big problem down into manageable pieces, operate on each piece and then put all the pieces back together.
+      + Usually deal with data frame, list or array.
                 
