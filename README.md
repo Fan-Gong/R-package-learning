@@ -23,4 +23,10 @@ Here is the list of the package:
        + It is used to break a big problem down into manageable pieces, operate on each piece and then put all the pieces back together.
        
        + Usually deal with data frame, list or array.
+       
+  * `ggplot2` -- data visualization package
+   
+       + It is used to store plot as a R object
+       
+       + Could make complex graph
                 
